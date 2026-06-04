@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Candidate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        linkedin: {
+                            blue: '#0a66c2',
+                            darkBlue: '#004182',
+                            lightBlue: '#eef3f8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-linkedin-lightBlue min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center gap-4 flex-grow">
+                    <a href="index.html" class="bg-linkedin-blue text-white p-1 rounded">
+                        <i class="fa-solid fa-briefcase text-xl px-1"></i>
+                    </a>
+                    <div class="relative max-w-md w-full hidden sm:block">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" placeholder="Search" class="block w-full pl-10 pr-3 py-1.5 bg-gray-100 border-none rounded focus:ring-2 focus:ring-linkedin-blue focus:bg-white text-sm transition">
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 transition">
+                        <i class="fa-solid fa-house text-xl"></i>
+                        <span class="text-xs mt-1">Home</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center text-linkedin-blue transition border-b-2 border-linkedin-blue h-14 justify-center pt-1">
+                        <i class="fa-solid fa-briefcase text-xl"></i>
+                        <span class="text-xs mt-1">Jobs</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 transition">
+                        <i class="fa-solid fa-message text-xl"></i>
+                        <span class="text-xs mt-1">Messaging</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 transition border-l border-gray-200 pl-4">
+                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=0a66c2&color=fff" class="w-6 h-6 rounded-full" alt="Profile">
+                        <span class="text-xs mt-1 flex items-center gap-1">Me <i class="fa-solid fa-caret-down text-[10px]"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Grid -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid lg:grid-cols-4 gap-6">
+            
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-4">
+                <!-- Profile Card -->
+                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                    <div class="h-16 bg-gradient-to-r from-blue-400 to-linkedin-blue"></div>
+                    <div class="px-4 pb-4 -mt-8 text-center">
+                        <img src="https://ui-avatars.com/api/?name=John+Doe&size=128&background=0a66c2&color=fff" class="w-16 h-16 rounded-full border-2 border-white mx-auto mb-3 shadow-md" alt="Avatar">
+                        <h2 class="font-bold text-lg hover:underline cursor-pointer">John Doe</h2>
+                        <p class="text-xs text-gray-500 mb-4 border-b border-gray-100 pb-4">Full Stack Developer | Laravel & React</p>
+                        
+                        <div class="text-left space-y-3">
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-gray-500">Profile viewers</span>
+                                <span class="text-linkedin-blue">142</span>
+                            </div>
+                            <div class="flex justify-between text-xs font-semibold">
+                                <span class="text-gray-500">Post impressions</span>
+                                <span class="text-linkedin-blue">1,245</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 border-t border-gray-100">
+                        <a href="#" class="text-xs font-bold text-gray-600 flex items-center gap-2 hover:bg-gray-100 p-1 rounded transition">
+                            <i class="fa-solid fa-bookmark text-gray-400"></i> My items
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm sticky top-20">
+                    <h3 class="text-sm font-bold mb-4">Manage My Career</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="flex items-center gap-3 text-sm text-gray-600 font-bold hover:bg-gray-50 p-2 rounded transition bg-blue-50 text-linkedin-blue">
+                            <i class="fa-solid fa-file-lines w-5"></i> My Applications
+                        </a>
+                        <a href="#" class="flex items-center gap-3 text-sm text-gray-600 font-bold hover:bg-gray-50 p-2 rounded transition">
+                            <i class="fa-solid fa-bell w-5"></i> Job Alerts
+                        </a>
+                        <a href="#" class="flex items-center gap-3 text-sm text-gray-600 font-bold hover:bg-gray-50 p-2 rounded transition">
+                            <i class="fa-solid fa-clipboard-check w-5"></i> Skill Assessments
+                        </a>
+                        <a href="#" class="flex items-center gap-3 text-sm text-gray-600 font-bold hover:bg-gray-50 p-2 rounded transition">
+                            <i class="fa-solid fa-gear w-5"></i> Job Preferences
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="lg:col-span-3 space-y-6">
+                <!-- My Applications Header -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                    <h1 class="text-xl font-bold mb-2">My Applications</h1>
+                    <p class="text-sm text-gray-500">Track and manage your recent job applications</p>
+                </div>
+
+                <!-- Applications List -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm divide-y divide-gray-100">
+                    <!-- Application Item 1 -->
+                    <div class="p-6 hover:bg-gray-50 transition cursor-pointer flex justify-between items-start gap-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center text-linkedin-blue font-bold text-xl">G</div>
+                            <div>
+                                <h3 class="font-bold text-lg hover:text-linkedin-blue hover:underline">Senior Software Engineer</h3>
+                                <p class="text-sm text-gray-600">Google • Mountain View, CA</p>
+                                <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
+                                    <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">Applied</span>
+                                    <span>Applied 3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                            <p class="text-xs font-bold text-linkedin-blue mt-4">Review status</p>
+                        </div>
+                    </div>
+
+                    <!-- Application Item 2 -->
+                    <div class="p-6 hover:bg-gray-50 transition cursor-pointer flex justify-between items-start gap-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center text-linkedin-blue font-bold text-xl">A</div>
+                            <div>
+                                <h3 class="font-bold text-lg hover:text-linkedin-blue hover:underline">Full Stack Developer</h3>
+                                <p class="text-sm text-gray-600">Amazon • Seattle, WA</p>
+                                <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
+                                    <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">In Review</span>
+                                    <span>Applied 1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                            <p class="text-xs font-bold text-linkedin-blue mt-4">Review status</p>
+                        </div>
+                    </div>
+
+                    <!-- Application Item 3 -->
+                    <div class="p-6 hover:bg-gray-50 transition cursor-pointer flex justify-between items-start gap-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center text-linkedin-blue font-bold text-xl">M</div>
+                            <div>
+                                <h3 class="font-bold text-lg hover:text-linkedin-blue hover:underline">Product Manager</h3>
+                                <p class="text-sm text-gray-600">Microsoft • Redmond, WA</p>
+                                <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded font-bold">Closed</span>
+                                    <span>Applied 2 weeks ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                            <p class="text-xs font-bold text-gray-400 mt-4">Position filled</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Jobs -->
+                <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                    <h2 class="font-bold mb-4">Recommended for you</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="border border-gray-100 rounded-lg p-4 hover:border-linkedin-blue transition cursor-pointer">
+                            <h4 class="font-bold text-sm">React Developer</h4>
+                            <p class="text-xs text-gray-500">Meta • Remote</p>
+                            <button class="mt-3 text-xs font-bold text-linkedin-blue border border-linkedin-blue px-3 py-1 rounded-full hover:bg-blue-50">Easy Apply</button>
+                        </div>
+                        <div class="border border-gray-100 rounded-lg p-4 hover:border-linkedin-blue transition cursor-pointer">
+                            <h4 class="font-bold text-sm">Backend Engineer</h4>
+                            <p class="text-xs text-gray-500">Netflix • Los Gatos, CA</p>
+                            <button class="mt-3 text-xs font-bold text-linkedin-blue border border-linkedin-blue px-3 py-1 rounded-full hover:bg-blue-50">Easy Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
