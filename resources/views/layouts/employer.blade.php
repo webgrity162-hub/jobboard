@@ -201,10 +201,10 @@
     </div>
 
     <!-- Floating Action Button -->
-    <button
+    {{-- <button
         class="fixed bottom-8 right-8 w-14 h-14 bg-linkedin-blue text-white rounded-full shadow-xl hover:bg-linkedin-darkBlue transition-all transform hover:scale-110 flex items-center justify-center z-50">
         <i class="fa-solid fa-plus text-xl"></i>
-    </button>
+    </button> --}}
 @endsection
 
 @section('footer')
