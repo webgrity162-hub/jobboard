@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         @endforeach
-                        {{ $jobs->links() }}
+                        {{ $jobs->appends(request()->except('page'))->links() }}
  
                         @if ($jobs->isEmpty())
                         <p class="text-center text-gray-500">No jobs found.</p>

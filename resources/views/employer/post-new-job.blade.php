@@ -1,12 +1,21 @@
 @extends('layouts.employer')
-@section('title', 'Applicants')
+@section('title', isset($job) ? 'Edit Job' : 'Post Job')
 
 @section('employer-content')
+    @php
+        $editing = isset($job);
+        $lineValue = fn($field) => old($field, $editing ? implode("\n", $job->{$field} ?? []) : '');
+    @endphp
+
     <div class="space-y-8">
         <div>
-            <h2 class="text-[1.5rem] font-bold tracking-tight text-slate-900">Post New Job</h2>
-            <p class="mt-1 font-medium text-slate-500">Fill in the details below to create a new high-impact career
-                opportunity.</p>
+            <h2 class="text-[1.5rem] font-bold tracking-tight text-slate-900">{{ $editing ? 'Edit Job' : 'Post New Job' }}</h2>
+            <p class="mt-1 font-medium text-slate-500">{{ $editing ? 'Update this listing and keep the opportunity details current.' : 'Fill in the details below to create a new high-impact career opportunity.' }}</p>
+            @error('update')
+                <p class="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-700">
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <div class="">
@@ -19,9 +28,12 @@
                     <span class="text-sm font-bold text-linkedin-blue">Job Information</span>
                 </div>
 
-                <form action="{{ route('employer.post-new-job-store') }}" method="post"
+                <form action="{{ $editing ? route('employer.jobs.update', $job->id) : route('employer.post-new-job-store') }}" method="post"
                     class="space-y-6 px-5 py-5 sm:px-6 sm:py-6">
                     @csrf
+                    @if ($editing)
+                        @method('PUT')
+                    @endif
                     <div class="grid gap-5 md:grid-cols-2">
                         <div class="space-y-2">
                             <label for="job-title" class="text-xs font-semibold text-slate-700">Job Title</label>
@@ -29,7 +41,7 @@
 
                                 <input id="job-title" type="text" placeholder="e.g. Senior Software Architect"
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('title') !border-red-500 @enderror"
-                                    value="{{ old('title') }}" name="title" @error('title') autofocus @enderror>
+                                    value="{{ old('title', $job->title ?? '') }}" name="title" @error('title') autofocus @enderror>
                                 @error('title')
                                     <p class="text-red-500  text-xs">{{ $message }}</p>
                                 @enderror
@@ -42,7 +54,7 @@
 
                                 <input id="job-location" type="text" placeholder="London, UK or Remote"
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white py-3 pl-4 pr-4 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('location') !border-red-500 @enderror"
-                                    value="{{ old('location') }}" name="location" @error('location') autofocus @enderror>
+                                    value="{{ old('location', $job->location ?? '') }}" name="location" @error('location') autofocus @enderror>
                                 @error('location')
                                     <p class="text-red text-xs">{{ $message }}</p>
                                 @enderror
@@ -53,12 +65,12 @@
                             <select id="job-category"
                                 class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('category') !border-red-500 @enderror"
                                 value="{{ old('category') }}" name="category" @error('category') autofocus @enderror>
-                                <option value="engineering">Engineering</option>
-                                <option value="design">Design</option>
-                                <option value="marketing">Marketing</option>
-                                <option value="operations">Operations</option>
-                                <option value="developer">Developer</option>
-                                <option value="teaching">Teaching</option>
+                                <option value="engineering" @selected(old('category', $job->category ?? '') === 'engineering')>Engineering</option>
+                                <option value="design" @selected(old('category', $job->category ?? '') === 'design')>Design</option>
+                                <option value="marketing" @selected(old('category', $job->category ?? '') === 'marketing')>Marketing</option>
+                                <option value="operations" @selected(old('category', $job->category ?? '') === 'operations')>Operations</option>
+                                <option value="developer" @selected(old('category', $job->category ?? '') === 'developer')>Developer</option>
+                                <option value="teaching" @selected(old('category', $job->category ?? '') === 'teaching')>Teaching</option>
                             </select>
                             @error('category')
                                 <p class="text-red text-xs">{{ $message }}</p>
@@ -70,10 +82,10 @@
                             <select id="employment-type"
                                 class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('type') !border-red-500 @enderror"
                                 value="{{ old('type') }}" name="type" @error('type') autofous @enderror>
-                                <option value="full-time">Full-time</option>
-                                <option value="part-time">Part-time</option>
-                                <option value="contract">Contract</option>
-                                <option value="remote">Remote</option>
+                                <option value="full-time" @selected(old('type', $job->type ?? '') === 'full-time')>Full-time</option>
+                                <option value="part-time" @selected(old('type', $job->type ?? '') === 'part-time')>Part-time</option>
+                                <option value="contract" @selected(old('type', $job->type ?? '') === 'contract')>Contract</option>
+                                <option value="remote" @selected(old('type', $job->type ?? '') === 'remote')>Remote</option>
                             </select>
                             @error('type')
                                 <p class="text-red text-xs">{{ $message }}</p>
@@ -86,8 +98,9 @@
                                 <select id="status"
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('status') !border-red-500 @enderror"
                                     value="{{ old('status') }}" name="status" @error('status') autofocus @enderror>
-                                    <option value="active">Active</option>
-                                    <option value="closed">Expired</option>
+                                    <option value="active" @selected(old('status', $job->status ?? '') === 'active')>Active</option>
+                                    <option value="draft" @selected(old('status', $job->status ?? '') === 'draft')>Draft</option>
+                                    <option value="closed" @selected(old('status', $job->status ?? '') === 'closed')>Expired</option>
 
                                 </select>
                                 @error('status')
@@ -100,7 +113,7 @@
                             <div class="relative">
                                 <input id="expire-at" type="date"
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('expire_at') !border-red-500 @enderror"
-                                    value="{{ old('expire_at') }}" name="expire_at"
+                                    value="{{ old('expire_at', isset($job) && $job->expires_at ? $job->expires_at->format('Y-m-d') : '') }}" name="expire_at"
                                     @error('expire_at') autofocus
                                 @enderror>
                                 @error('expire_at')
@@ -115,10 +128,10 @@
                                 class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('experience') !border-red-500 @enderror"
                                 @error('experience') autofocus @enderror value="{{ old('experience') }}"
                                 name="experience">
-                                <option value="lead">Lead Level</option>
-                                <option value="senior">Senior Level</option>
-                                <option value="mid">Mid-level</option>
-                                <option value="entry">Entry Level</option>
+                                <option value="lead" @selected(old('experience', $job->experience ?? '') === 'lead')>Lead Level</option>
+                                <option value="senior" @selected(old('experience', $job->experience ?? '') === 'senior')>Senior Level</option>
+                                <option value="mid" @selected(old('experience', $job->experience ?? '') === 'mid')>Mid-level</option>
+                                <option value="entry" @selected(old('experience', $job->experience ?? '') === 'entry')>Entry Level</option>
                             </select>
                             @error('experience')
                                 <p class="text-red text-xs">{{ $message }}</p>
@@ -135,7 +148,7 @@
                                     Salary</label>
                                 <input id="min-salary" type="text" 
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10"
-                                    value="{{ old('salary-min') }}" name="salary-min">
+                                    value="{{ old('salary-min', $job->salary_min ?? '') }}" name="salary-min">
                                 @error('salary-min')
                                     <p class="text-red text-xs">{{ $message }}</p>
                                 @enderror
@@ -146,7 +159,7 @@
                                     Salary</label>
                                 <input id="max-salary" type="text"
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('salary-max') !border-red-500 @enderror"
-                                    name="salary-max" value="{{ old('salary-max') }}"
+                                    name="salary-max" value="{{ old('salary-max', $job->salary_max ?? '') }}"
                                     @error('salary-max') autofocus @enderror>
                                 @error('salary-max')
                                     <p class="text-red text-xs">{{ $message }}</p>
@@ -159,10 +172,10 @@
                                     class="w-full rounded-xl border border-[#d4ddeb] bg-white px-4 py-3 text-sm text-slate-700 shadow-sm outline-none transition focus:border-linkedin-blue focus:ring-4 focus:ring-linkedin-blue/10 @error('currency') !border-red-500 @enderror"
                                     @error('currency') autofocus @enderror value="{{ old('currency') }}"
                                     name="currency">
-                                    <option value="usd">USD ($)</option>
-                                    <option value="eur">EUR</option>
-                                    <option value="gbp">GBP</option>
-                                    <option value="inr">INR</option>
+                                    <option value="usd" @selected(old('currency', $job->currency ?? '') === 'usd')>USD ($)</option>
+                                    <option value="eur" @selected(old('currency', $job->currency ?? '') === 'eur')>EUR</option>
+                                    <option value="gbp" @selected(old('currency', $job->currency ?? '') === 'gbp')>GBP</option>
+                                    <option value="inr" @selected(old('currency', $job->currency ?? '') === 'inr')>INR</option>
                                 </select>
                                 @error('currency')
                                     <p class="text-red text-xs">{{ $message }}</p>
@@ -189,7 +202,7 @@
                                 placeholder="Describe the core mission, responsibilities, and team culture..."
                                 class="w-full resize-none border-0 px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 focus:ring-0"
                                 name="description" @error('description') autofocus
-                                @enderror>{{ old('description') }}</textarea>
+                                @enderror>{{ old('description', $job->description ?? '') }}</textarea>
                             @error('description')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -214,7 +227,7 @@
                             <textarea id="job-responsibilities" rows="6"
                                 placeholder="Describe the core mission, responsibilities, and team culture..."
                                 class="w-full resize-none border-0 px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 focus:ring-0"
-                                name="responsibilities">{{ old('responsibilities') }}</textarea>
+                                name="responsibilities">{{ $lineValue('responsibilities') }}</textarea>
                             @error('responsibilities')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -236,7 +249,7 @@
                             <textarea id="key-requirements" rows="5"
                                 placeholder="List required skills, experience, and educational background..."
                                 class="w-full resize-none border-0 px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 focus:ring-0"
-                                name="requirements">{{ old('requirements') }}</textarea>
+                                name="requirements">{{ $lineValue('requirements') }}</textarea>
                             @error('requirements')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -260,7 +273,7 @@
                             <textarea id="benefits" rows="6" placeholder="Describe the benefits..."
                                 class="w-full resize-none border-0 px-4 py-3 text-sm @error('benefits') !border-red-500 @enderror text-slate-700 outline-none placeholder:text-slate-400 focus:ring-0"
                                 name="benefits" @error('benefits') autofocus
-                                @enderror>{{ old('benefits') }}</textarea>
+                                @enderror>{{ $lineValue('benefits') }}</textarea>
                             @error('benefits')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -279,8 +292,7 @@
                                 class="rounded-xl border border-[#d4ddeb] bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                                 value="draft">Save Draft</button>
                             <button type="submit"
-                                class="rounded-xl bg-linkedin-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-linkedin-darkBlue">Publish
-                                Job</button>
+                                class="rounded-xl bg-linkedin-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-linkedin-darkBlue">{{ $editing ? 'Update Job' : 'Publish Job' }}</button>
                         </div>
                     </div>
                 </form>

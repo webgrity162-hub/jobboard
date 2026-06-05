@@ -36,8 +36,8 @@ class JobPostRequest extends FormRequest
             'salary-min'     => 'required|numeric',
             'salary-max'     => 'required|numeric|gt:salary-min',
             'currency'     => 'required|string',
-            'status'     => 'required|string',
-            'expire_at'     => 'required|date',
+            'status'     => 'required|in:active,draft,closed',
+            'expire_at'     => 'required|date|after:today',
         ];
     }
 }

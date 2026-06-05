@@ -22,6 +22,11 @@ class JobService
         return $this->jobRepository->getBySlug($slug);
     }
 
+    public function getByCompanyAndId($company_id, $id)
+    {
+        return $this->jobRepository->getByCompanyAndId($company_id, $id);
+    }
+
     public function create($data)
     {
         $data['slug'] = \Illuminate\Support\Str::slug($data['title']) . '-' . uniqid();
@@ -30,6 +35,13 @@ class JobService
     }
     public function update($id, $data)
     {
+        $count = $this->getJobWithApplicants($id);
+        if($count->applicants_count >=1){
+            return [
+                'status' => 'error',
+                'message' => 'Cannot update job with applicants'
+            ];
+        }
         return $this->jobRepository->update($id, $data);
     }
     public function delete($id)
@@ -40,5 +52,19 @@ class JobService
     public function getJobByCompany($id)
     {
         return $this->jobRepository->getJobByCompany($id);
+    }
+
+    public function getJobForCompany($id, $data)
+    {
+        $jobs = $this->jobRepository->getJobForCompany($id, $data);
+        $counts = $this->jobRepository->getJobCount($id);
+        return [
+            'jobs' => $jobs,
+            'counts' => $counts
+        ];
+    }
+
+    private function getJobWithApplicants($id){
+        return $this->jobRepository->getJobWithApplicants($id);
     }
 }

@@ -47,8 +47,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/employer/applicants/{id}', [EmployerController::class, 'applicantShow'])->name('employer.applicants.show');
         Route::get('/employer/manage-jobs', [EmployerController::class, 'manageJobs'])->name('employer.manageJobs');
         Route::get('/employer/post-job', [EmployerController::class, 'postNewjob'])->name('employer.post.new.job');
+        Route::get('/employer/jobs/{id}/edit', [EmployerController::class, 'editJob'])->name('employer.jobs.edit');
         Route::get('/employer/company-profile', [EmployerController::class, 'companyProfile'])->name('employer.company.profile');
         Route::post('/employer/post-job-new', [EmployerController::class, 'postNewJobStore'])->name('employer.post-new-job-store');
+        Route::put('/employer/jobs/{id}', [EmployerController::class, 'updateJob'])->name('employer.jobs.update');
+        Route::delete('/employer/jobs/{id}', [EmployerController::class, 'deleteJob'])->name('employer.jobs.delete');
         Route::patch(
             '/employer/applications/{id}/status',
             [EmployerController::class, 'updateStatus']

@@ -69,6 +69,13 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if ($applicants->isEmpty())
+                        <tr>
+                            <td colspan="5" class="border-b border-[#edf2f9] px-5 py-4 text-center text-sm text-slate-500">
+                                No applicants found.
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -82,15 +89,16 @@
     <div class="flex flex-wrap items-center gap-2">
         <span class="inline-flex items-center gap-1.5">
             <span class="h-2 w-2 rounded-full bg-fuchsia-400"></span>
-            12 Shortlisted
+            {{ $applicantsStatusCounts['shortlisted'] ?? 0 }} Shortlisted
         </span>
         <span class="inline-flex items-center gap-1.5">
             <span class="h-2 w-2 rounded-full bg-blue-400"></span>
-            4 Interviewing
+            {{ $applicantsStatusCounts['interviewing'] ?? 0 }} Interviewing
         </span>
+        
         <span class="inline-flex items-center gap-1.5">
             <span class="h-2 w-2 rounded-full bg-amber-400"></span>
-            8 New
+            {{ $applicantsStatusCounts['reviewing'] ?? 0 }} Reviewing
         </span>
     </div>
 
