@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
         )
             ->name('employer.applications.status');
 
+        Route::patch('/update-company-profile',[AuthController::class,'updateCompanyProfile'])->name('employer.company.update');
+
     });
 
 

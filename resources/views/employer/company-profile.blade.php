@@ -10,7 +10,10 @@
         </div>
 
         <section class="rounded-[24px] border border-[#dbe5f4] bg-white shadow-[0_14px_38px_rgba(15,23,42,0.05)]">
-            <form class="space-y-8 p-5 sm:p-6">
+            <form method="POST" action="{{ route('employer.company.update') }}" class="space-y-8 p-5 sm:p-6">
+                @csrf
+
+                @method('PATCH')
                 <div class="flex flex-col gap-5 border-b border-[#e8eef8] pb-6 lg:flex-row lg:items-start">
                     <div class="flex h-28 w-28 shrink-0 items-center justify-center rounded-2xl border border-dashed border-[#d7e0ed] bg-[#f7f9fd]">
                         @if ($profile['logo'])
@@ -28,9 +31,7 @@
                         <p class="mt-1 text-sm text-slate-500">Upload your company logo. Professional high-resolution PNG or SVG preferred. Max size 2MB.</p>
 
                         <div class="mt-4 flex flex-wrap items-center gap-3">
-                            <button type="button" class="rounded-xl border border-[#d6deeb] bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50">
-                                Remove
-                            </button>
+                          
                             <button type="button" class="rounded-xl bg-linkedin-blue px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-linkedin-darkBlue">
                                 Upload New
                             </button>

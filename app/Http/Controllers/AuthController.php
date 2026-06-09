@@ -69,5 +69,9 @@ class AuthController extends Controller
         }
         return redirect()->route('candidate.dashboard');
     }
+
+    public function updateCompanyProfile(Request $req){
+        dd($req->all());
+    }
     
 }
